@@ -1,36 +1,37 @@
-// inventory.js  (legacy ES5 style — to be modernised)
-var TAX_RATE = 0.08;
+// ES6: const instead of var for values that do not get reassigned
+const TAX_RATE = 0.08;
 
-function Inventory(items) {
-  this.items = items || [];
+// ES6: class syntax replacing the constructor function + prototype pattern
+class Inventory {
+  // ES6: Default parameters replacing the old `items || []` fallback
+  constructor(items = []) {
+    this.items = items;
+  }
+
+  addItem(name, price, qty) {
+    // ES6: using object property shorthand
+    this.items.push({ name, price, qty });
+  }
+
+  totalQuantity() {
+    // ES6: using .reduce combined with an arrow function
+    return this.items.reduce((total, item) => total + item.qty, 0);
+  }
+
+  subtotal() {
+    // ES6: using Destructuring 
+    return this.items.reduce((sum, { price, qty }) => sum + (price * qty), 0);
+  }
+
+  withTax() {
+    let raw = this.subtotal() + this.subtotal() * TAX_RATE;
+    return Math.round(raw * 100) / 100;;
+  }
+
+  summary() {
+    // ES6: Template literal instead of string concatenation
+    return `Items: ${this.totalQuantity()}, Total: $${this.withTax()}`;
+  }
 }
-
-Inventory.prototype.addItem = function (name, price, qty) {
-  this.items.push({ name: name, price: price, qty: qty });
-};
-
-Inventory.prototype.totalQuantity = function () {
-  var total = 0;
-  for (var i = 0; i < this.items.length; i++) {
-    total += this.items[i].qty;
-  }
-  return total;
-};
-
-Inventory.prototype.subtotal = function () {
-  var sum = 0;
-  for (var i = 0; i < this.items.length; i++) {
-    sum += this.items[i].price * this.items[i].qty;
-  }
-  return sum;
-};
-
-Inventory.prototype.withTax = function () {
-  return this.subtotal() + this.subtotal() * TAX_RATE;
-};
-
-Inventory.prototype.summary = function () {
-  return 'Items: ' + this.totalQuantity() + ', Total: $' + this.withTax();
-};
 
 module.exports = Inventory;
