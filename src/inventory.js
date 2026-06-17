@@ -24,7 +24,8 @@ class Inventory {
   }
 
   withTax() {
-    return this.subtotal() + this.subtotal() * TAX_RATE;
+    let raw = this.subtotal() + this.subtotal() * TAX_RATE;
+    return Math.round(raw * 100) / 100;;
   }
 
   summary() {
