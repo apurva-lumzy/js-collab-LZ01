@@ -9,8 +9,9 @@ function addInputs(a, b) {
 
 // Should build an array of n functions where the k-th function returns k.
 function makeCounters(n) {
-  var fns = [];
-  for (var i = 0; i < n; i++) {
+  //why: A variable defined using "var" have same value across repetitive declarations.
+  let fns = [];
+  for (let i = 0; i < n; i++) {
     fns.push(function () { return i; });
   }
   return fns;
