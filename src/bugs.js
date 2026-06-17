@@ -19,8 +19,8 @@ function makeCounters(n) {
 
 // Should return a NEW array with `item` appended, leaving the original intact.
 function withItem(arr, item) {
-  arr.push(item);
-  return arr;
+  //why: .push() adds modify the original array and add element at last. 
+  return [...arr, item];
 }
 
 module.exports = { addInputs: addInputs, makeCounters: makeCounters, withItem: withItem };
